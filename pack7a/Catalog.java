@@ -13,18 +13,23 @@ public class Catalog {
     }
 
     public void add(Product product, int price) {
-
+        if (!productList.containsKey(product.getpName())) {
+            productList.put(product.getpName(), product);
+            priceList.put(product.getpName(), price);
+        }
     }
 
-    public void showCatalog() {
-
+    public void showCatalog() { 
+        for (Map.Entry<String, Product> entry : productList.entrySet()) {
+            System.out.println(entry.getValue().getpName() + " @ " + priceList.get(entry.getKey()));
+        }
     }
 
     public int getPrice(String productName) {
-        return 0;
+        return priceList.get(productName);
     }
 
     public Product getProduct(String productName) {
-        return null;
+        return productList.get(productName);
     }
 }

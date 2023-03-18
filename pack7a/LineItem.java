@@ -20,7 +20,7 @@ public class LineItem {
     }
 
     public int calculateAmount() {
-        return 0;
+        return quantity * buyPrice;
     }
 
     @Override

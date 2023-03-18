@@ -1,7 +1,6 @@
 package pack7a;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Shop {
     private String name;
@@ -20,26 +19,44 @@ public class Shop {
     }
 
     private void showCatalog() {
+        System.out.println("Welcome to " + name);
+        catalog.showCatalog();
     }
 
     public Basket newCustomerArrives() {
-        return null;
+        return new Basket();
     }
 
     public LineItem generateLineItem(String pName, int q) { // add to UML
-        return null;
+        return new LineItem(catalog.getProduct(pName), q, catalog.getPrice(pName));
     }
 
     public LineItem generateBuyNowItem(String pName) {
-        return null;
+        Basket basket = new Basket();
+        basket.putInBasket(generateLineItem(pName, 1));
+        ordersToday.add(basket);
+        return generateLineItem(pName, 1);
     }
 
-    public void getPayment(Basket b) {
-
+    public void getPayment(Basket basket) {
+        System.out.println("I am cashier");
+        basket.printInvoice();
+        ordersToday.add(basket);
     }
 
     public void dailySalesReport() {
-
+        int dailyTotal = 0;
+        System.out.println("Today's sales: ");
+        for (Basket basket : ordersToday) {
+            basket.showItemsInBasket();
+            int basketTotal = 0;
+            for (LineItem lineItem : basket) {
+                basketTotal += lineItem.calculateAmount();
+            }
+            dailyTotal += basketTotal;
+            System.out.println("Total: " + basketTotal);
+        }
+        System.out.println("Today's Total: " + dailyTotal);
     }
 
 }
